@@ -1,7 +1,7 @@
 %define name tor
 %define runuser toruser
-%define version 0.1.1.26
-%define release %mkrel 2
+%define version 0.1.2.13
+%define release %mkrel 1
 
 Name:		%{name}
 Version:	%{version}

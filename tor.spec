@@ -1,11 +1,8 @@
-%define name tor
 %define runuser toruser
-%define version 0.1.2.13
-%define release %mkrel 1
 
-Name:		%{name}
-Version:	%{version}
-Release:	%{release}
+Name:		tor
+Version:	0.1.2.13
+Release:	%mkrel 2
 Summary:	Anonymizing overlay network for TCP (The onion router)
 URL:		http://tor.eff.org/
 Group:		Networking/Other

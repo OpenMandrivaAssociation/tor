@@ -1,8 +1,8 @@
 %define runuser toruser
 
 Name:		tor
-Version:	0.1.2.13
-Release:	%mkrel 2
+Version:	0.1.2.14
+Release:	%mkrel 1
 Summary:	Anonymizing overlay network for TCP (The onion router)
 URL:		http://tor.eff.org/
 Group:		Networking/Other

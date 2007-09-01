@@ -1,7 +1,7 @@
 %define runuser toruser
 
 Name:		tor
-Version:	0.1.2.16
+Version:	0.1.2.17
 Release:	%mkrel 1
 Summary:	Anonymizing overlay network for TCP (The onion router)
 URL:		http://tor.eff.org/
@@ -18,7 +18,7 @@ BuildRequires:	libevent-devel
 BuildRequires:	zlib-devel
 BuildRequires:	autoconf2.5
 BuildRequires:	transfig, tetex-latex
-Source0:	http://tor.eff.org/dist/%{name}-%{version}.tar.bz2
+Source0:	http://tor.eff.org/dist/%{name}-%{version}.tar.gz
 Source1:	%{name}.logrotate
 Source2:	%{name}.init
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
@@ -113,5 +113,3 @@ rm -f ${_localstatedir}/%{name}/fingerprint
 %attr(0750,%{runuser},%{runuser}) %dir %{_var}/run/%{name}
 %attr(0750,%{runuser},%{runuser}) %dir %{_logdir}/%{name}
 %{_sysconfdir}/bash_completion.d/%{name}
-
-

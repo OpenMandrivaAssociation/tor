@@ -21,6 +21,7 @@ BuildRequires:	transfig, tetex-latex
 Source0:	http://tor.eff.org/dist/%{name}-%{version}.tar.gz
 Source1:	%{name}.logrotate
 Source2:	%{name}.init
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 Tor is a connection-based low-latency anonymous communication system.

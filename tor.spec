@@ -69,7 +69,7 @@ install -p -m 644 ${RPM_BUILD_ROOT}%{_sysconfdir}/%{name}/torrc.sample ${RPM_BUI
 mkdir -p -m 755 ${RPM_BUILD_ROOT}%{_sysconfdir}/logrotate.d
 cat %{SOURCE1} > ${RPM_BUILD_ROOT}%{_sysconfdir}/logrotate.d/%{name}
 
-mkdir -p -m 700 ${RPM_BUILD_ROOT}%{_localstatedir}/%{name}
+mkdir -p -m 700 ${RPM_BUILD_ROOT}%{_localstatedir}/lib/%{name}
 mkdir -p -m 755 ${RPM_BUILD_ROOT}%{_var}/run/%{name}
 mkdir -p -m 755 ${RPM_BUILD_ROOT}%{_logdir}/%{name}
 
@@ -109,7 +109,7 @@ rm -f ${_localstatedir}/%{name}/fingerprint
 %config(noreplace) %attr(0644,root,root) %{_sysconfdir}/logrotate.d/%{name}
 %dir %attr(0755,root,%{runuser}) %{_sysconfdir}/%{name}/
 %config(noreplace) %attr(0644,root,%{runuser}) %{_sysconfdir}/%{name}/*
-%attr(0700,%{runuser},%{runuser}) %dir %{_localstatedir}/%{name}
+%attr(0700,%{runuser},%{runuser}) %dir %{_localstatedir}/lib/%{name}
 %attr(0750,%{runuser},%{runuser}) %dir %{_var}/run/%{name}
 %attr(0750,%{runuser},%{runuser}) %dir %{_logdir}/%{name}
 %{_sysconfdir}/bash_completion.d/%{name}

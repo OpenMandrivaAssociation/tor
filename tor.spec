@@ -22,6 +22,7 @@ Source0:	http://tor.eff.org/dist/%{name}-%{version}.tar.gz
 Source1:	%{name}.logrotate
 Source2:	%{name}.init
 Source3: 	%{name}.sysconfig
+Patch0:     %{name}-0.1.2.19.gcc_fortify.patch 
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
@@ -48,7 +49,8 @@ for high-stakes anonymity.
 
 %prep
 %setup -q 
-
+%patch0 -p0
+ 
 %build
 %configure2_5x
 %make

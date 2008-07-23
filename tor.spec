@@ -1,8 +1,8 @@
 %define runuser toruser
 
 Name:		tor
-Version:	0.1.2.19
-Release:	%mkrel 3
+Version:	0.2.0.30
+Release:	%mkrel 1
 Summary:	Anonymizing overlay network for TCP (The onion router)
 URL:		http://tor.eff.org/
 Group:		Networking/Other
@@ -111,6 +111,7 @@ rm -f ${_localstatedir}/%{name}/fingerprint
 %{_bindir}/tor
 %{_bindir}/torify
 %{_bindir}/tor-resolve
+%{_bindir}/tor-gencert
 %config(noreplace) %attr(0755,%{runuser},%{runuser}) %{_initrddir}/%{name}
 %config(noreplace) %attr(0644,root,root) %{_sysconfdir}/logrotate.d/%{name}
 %dir %attr(0755,root,%{runuser}) %{_sysconfdir}/%{name}/
@@ -120,3 +121,4 @@ rm -f ${_localstatedir}/%{name}/fingerprint
 %attr(0750,%{runuser},%{runuser}) %dir %{_var}/run/%{name}
 %attr(0750,%{runuser},%{runuser}) %dir %{_logdir}/%{name}
 %{_sysconfdir}/bash_completion.d/%{name}
+%{_datadir}/%{name}

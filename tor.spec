@@ -92,11 +92,11 @@ echo 'complete -F _command $filenames torify' > ${RPM_BUILD_ROOT}%{_sysconfdir}/
 
 %preun
 %_preun_service %{name}
-rm -f ${_localstatedir}/%{name}/cached-directory
-rm -f ${_localstatedir}/%{name}/bw_accounting
-rm -f ${_localstatedir}/%{name}/control_auth_cookie
-rm -f ${_localstatedir}/%{name}/router.desc
-rm -f ${_localstatedir}/%{name}/fingerprint
+rm -f %{_localstatedir}/%{name}/cached-directory
+rm -f %{_localstatedir}/%{name}/bw_accounting
+rm -f %{_localstatedir}/%{name}/control_auth_cookie
+rm -f %{_localstatedir}/%{name}/router.desc
+rm -f %{_localstatedir}/%{name}/fingerprint
 
 %postun
 %_postun_userdel %{runuser}

@@ -2,7 +2,7 @@
 
 Name:		tor
 Version:	0.2.1.20
-Release:	%mkrel 1
+Release:	%mkrel 2
 Summary:	Anonymizing overlay network for TCP (The onion router)
 URL:		http://tor.eff.org/
 Group:		Networking/Other
@@ -22,6 +22,8 @@ Source0:	http://tor.eff.org/dist/%{name}-%{version}.tar.gz
 Source1:	%{name}.logrotate
 Source2:	%{name}.init
 Source3: 	%{name}.sysconfig
+Patch0:		tor-work-with-reneg-ssl.patch
+
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
@@ -48,6 +50,7 @@ for high-stakes anonymity.
 
 %prep
 %setup -q 
+%patch0 -p1
  
 %build
 %configure2_5x

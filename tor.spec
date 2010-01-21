@@ -1,10 +1,10 @@
 %define runuser toruser
 
 Name:		tor
-Version:	0.2.1.21
+Version:	0.2.1.22
 Release:	%mkrel 1
 Summary:	Anonymizing overlay network for TCP (The onion router)
-URL:		http://tor.eff.org/
+URL:		http://www.torproject.org/
 Group:		Networking/Other
 License:	BSD-like
 Requires(pre):	rpm-helper
@@ -18,7 +18,7 @@ BuildRequires:	libevent-devel
 BuildRequires:	zlib-devel
 BuildRequires:	autoconf2.5
 BuildRequires:	transfig, tetex-latex
-Source0:	http://tor.eff.org/dist/%{name}-%{version}.tar.gz
+Source0:	http://www.torproject.org/dist/%{name}-%{version}.tar.gz
 Source1:	%{name}.logrotate
 Source2:	%{name}.init
 Source3: 	%{name}.sysconfig

@@ -18,6 +18,7 @@ BuildRequires:	libevent-devel
 BuildRequires:	zlib-devel
 BuildRequires:	autoconf2.5
 BuildRequires:	transfig, tetex-latex
+BuildRequires:	ghostscript
 Source0:	http://www.torproject.org/dist/%{name}-%{version}.tar.gz
 Source1:	%{name}.logrotate
 Source2:	%{name}.init

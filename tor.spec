@@ -2,7 +2,7 @@
 
 Name:		tor
 Version:	0.2.1.28
-Release:	%mkrel 1
+Release:	%mkrel 2
 Summary:	Anonymizing overlay network for TCP (The onion router)
 URL:		http://www.torproject.org/
 Group:		Networking/Other

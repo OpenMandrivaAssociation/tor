@@ -1,7 +1,7 @@
 %define runuser toruser
 
 Name:		tor
-Version:	0.2.1.30
+Version:	0.2.2.35
 Release:	%mkrel 1
 Summary:	Anonymizing overlay network for TCP (The onion router)
 URL:		http://www.torproject.org/
@@ -17,8 +17,6 @@ BuildRequires:	openssl-devel >= 0.9.6
 BuildRequires:	libevent-devel
 BuildRequires:	zlib-devel
 BuildRequires:	autoconf2.5
-BuildRequires:	transfig, tetex-latex
-BuildRequires:	ghostscript
 Source0:	http://www.torproject.org/dist/%{name}-%{version}.tar.gz
 Source1:	%{name}.logrotate
 Source2:	%{name}.init
@@ -54,7 +52,6 @@ for high-stakes anonymity.
 %build
 %configure2_5x
 %make
-make -C doc/design-paper tor-design.pdf
 
 %install
 [ "${RPM_BUILD_ROOT}" != "/" ] && rm -rf ${RPM_BUILD_ROOT}
@@ -106,7 +103,7 @@ rm -f %{_localstatedir}/%{name}/fingerprint
 
 %files
 %defattr(-,root,root)
-%doc AUTHORS INSTALL LICENSE README ChangeLog doc/HACKING doc/TODO doc/design-paper/tor-design.pdf
+%doc LICENSE README ChangeLog ReleaseNotes doc/HACKING doc/TODO 
 %{_mandir}/man*/*
 %{_bindir}/tor
 %{_bindir}/torify

@@ -1,7 +1,7 @@
 %define runuser toruser
 
 Name:		tor
-Version:	0.2.2.35
+Version:	0.2.2.38
 Release:	%mkrel 1
 Summary:	Anonymizing overlay network for TCP (The onion router)
 URL:		http://www.torproject.org/
@@ -21,8 +21,6 @@ Source0:	http://www.torproject.org/dist/%{name}-%{version}.tar.gz
 Source1:	%{name}.logrotate
 Source2:	%{name}.init
 Source3: 	%{name}.sysconfig
-
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 Tor is a connection-based low-latency anonymous communication system.
@@ -54,34 +52,29 @@ for high-stakes anonymity.
 %make
 
 %install
-[ "${RPM_BUILD_ROOT}" != "/" ] && rm -rf ${RPM_BUILD_ROOT}
-
 %makeinstall
 
 %define _logdir %{_var}/log
 
-mkdir -p ${RPM_BUILD_ROOT}%{_initrddir}
-cat %{SOURCE2} > ${RPM_BUILD_ROOT}%{_initrddir}/%{name}
-chmod 0755 ${RPM_BUILD_ROOT}%{_initrddir}/%{name}
+mkdir -p %{buildroot}%{_initrddir}
+cat %{SOURCE2} > %{buildroot}%{_initrddir}/%{name}
+chmod 0755 %{buildroot}%{_initrddir}/%{name}
 
-install -p -m 644 ${RPM_BUILD_ROOT}%{_sysconfdir}/%{name}/torrc.sample ${RPM_BUILD_ROOT}%{_sysconfdir}/%{name}/torrc
+install -p -m 644 %{buildroot}%{_sysconfdir}/%{name}/torrc.sample %{buildroot}%{_sysconfdir}/%{name}/torrc
 
-mkdir -p -m 755 ${RPM_BUILD_ROOT}%{_sysconfdir}/logrotate.d
-cat %{SOURCE1} > ${RPM_BUILD_ROOT}%{_sysconfdir}/logrotate.d/%{name}
+mkdir -p -m 755 %{buildroot}%{_sysconfdir}/logrotate.d
+cat %{SOURCE1} > %{buildroot}%{_sysconfdir}/logrotate.d/%{name}
 
-mkdir -p -m 755 ${RPM_BUILD_ROOT}%{_sysconfdir}/sysconfig/
-cat %{SOURCE3} > ${RPM_BUILD_ROOT}%{_sysconfdir}/sysconfig/%{name}
+mkdir -p -m 755 %{buildroot}%{_sysconfdir}/sysconfig/
+cat %{SOURCE3} > %{buildroot}%{_sysconfdir}/sysconfig/%{name}
 
-mkdir -p -m 700 ${RPM_BUILD_ROOT}%{_localstatedir}/lib/%{name}
-mkdir -p -m 755 ${RPM_BUILD_ROOT}%{_var}/run/%{name}
-mkdir -p -m 755 ${RPM_BUILD_ROOT}%{_logdir}/%{name}
+mkdir -p -m 700 %{buildroot}%{_localstatedir}/lib/%{name}
+mkdir -p -m 755 %{buildroot}%{_var}/run/%{name}
+mkdir -p -m 755 %{buildroot}%{_logdir}/%{name}
 
 # Bash completion
-mkdir -p ${RPM_BUILD_ROOT}%{_sysconfdir}/bash_completion.d
-echo 'complete -F _command $filenames torify' > ${RPM_BUILD_ROOT}%{_sysconfdir}/bash_completion.d/%{name}
-
-%clean
-[ "${RPM_BUILD_ROOT}" != "/" ] && rm -rf ${RPM_BUILD_ROOT}
+mkdir -p %{buildroot}%{_sysconfdir}/bash_completion.d
+echo 'complete -F _command $filenames torify' > %{buildroot}%{_sysconfdir}/bash_completion.d/%{name}
 
 %pre
 %_pre_useradd %{runuser} / /bin/false

@@ -1,0 +1,5 @@
+sources:
+  "tor-0.2.2.39.tar.gz:"	cc5021a7656c0cd22de42da9f0ce7335026852bf
+  "tor.init:"	6c37c48ef71fd1ac93a84d71974cb766bc138178
+  "tor.logrotate:"	fe128a1463249ca0236f725672933ed708842acb
+  "tor.sysconfig:"	fc138445deeb2475cf0cb6d51b723b18fa774abe

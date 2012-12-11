@@ -1,0 +1,2 @@
+# you can use this file to augment the limit of open file , with ulimit -n
+#ulimit -n 2048

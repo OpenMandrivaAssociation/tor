@@ -1,0 +1,108 @@
+#!/bin/bash
+#
+#tor    The Onion Router
+#
+# chkconfig: 2345 90 10
+# description: Onion Router
+### BEGIN INIT INFO
+# Provides: tor
+# Should-Start: $network
+# Should-Stop: $network
+# Default-Start: 2 3 4 5
+# Short-Description: The Onion Router
+# Description: The Onion Router.
+### END INIT INFO
+
+TORUSER=toruser
+TORBIN=/usr/bin/tor
+TORPID=/var/run/tor/tor.pid
+TORLOG=/var/log/tor/tor.log
+TORDATA=/var/lib/tor
+
+TORCONF=/etc/tor/torrc
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+# Source networking configuration.
+. /etc/sysconfig/network
+
+[ -r /etc/sysconfig/tor ] && . /etc/sysconfig/tor
+
+# Check that networking is up.
+[ ${NETWORKING} = "no" ] && exit 0
+
+TORARGS="PIDFile $TORPID Log \"notice file $TORLOG\" RunAsDaemon 1 DataDirectory $TORDATA User $TORUSER"
+
+RETVAL=0
+
+# See how we were called.
+case "$1" in
+  start)
+    gprintf "Starting %s:" tor
+    if [ -f $TORPID ]; then
+      failure "tor appears to be already running (pid file exists)"
+      exit 1
+    fi
+    daemon $TORBIN -f $TORCONF $TORARGS
+    RETVAL=$?
+    if [ "$RETVAL" = 0 ]; then
+      success "%s startup" tor
+      touch /var/lock/subsys/tor
+    else
+      failure "%s startup" tor
+    fi
+    echo
+    ;;
+  stop)
+    gprintf "Stopping %s:" tor
+    if [ -f $TORPID ]; then
+      kill `cat $TORPID`
+      RETVAL=$?
+      if [ "$RETVAL" = 0 ]; then
+        success "%s shutdown" tor
+       	rm -f /var/lock/subsys/tor
+      else
+        failure "%s shutdown" tor
+      fi
+    else
+      success "%s is not running" tor
+      RETVAL=0
+    fi
+    echo
+    ;;
+  status)
+    status tor
+    ;;
+  restart)
+    $0 stop
+    $0 start
+    ;;
+  reload)
+    gprintf "Reloading %s:" tor
+    if [ -f $TORPID ]; then
+      gprintf "Sending HUP to tor: "
+      kill -HUP `cat $TORPID`
+      RETVAL=$?
+      [ "$RETVAL" = 0 ] && success "config reload" || failure "config reload"
+    else
+      failure "%s is not running" tor
+      RETVAL=1
+    fi
+    echo
+    ;;
+  condrestart)
+    if [ -f $TORPID ]; then
+      $0 stop
+      $0 start
+    fi
+    ;;
+  log)
+    cat $TORLOG
+    ;;
+  *)
+    gprintf "Usage: %s {start|stop|restart|reload|status|log}\n" $0
+    exit 1
+esac
+
+exit $RETVAL

@@ -1,23 +1,28 @@
 %define runuser toruser
 
-Summary:	Anonymizing overlay network for TCP (The onion router)
 Name:		tor
-Version:	0.2.2.39
-Release:	2
+Version:	0.2.3.25
+Release:	1
+Summary:	Anonymizing overlay network for TCP (The onion router)
+URL:		http://www.torproject.org/
 Group:		Networking/Other
 License:	BSD-like
-Url:		http://www.torproject.org/
-Source0:	http://www.torproject.org/dist/%{name}-%{version}.tar.gz
-Source1:	%{name}.logrotate
-Source2:	%{name}.init
-Source3: 	%{name}.sysconfig
-
-BuildRequires:	pkgconfig(openssl)
-BuildRequires:	pkgconfig(libevent)
-BuildRequires:	pkgconfig(zlib)
-Requires(pre,post,preun,postun):	rpm-helper
+Requires(post):  systemd
+Requires(post):  rpm-helper
+Requires(preun): rpm-helper
 Requires:	openssl >= 0.9.6
 Requires:	tsocks
+BuildRequires:	openssl-devel >= 0.9.6 
+BuildRequires:	libevent-devel
+BuildRequires:	zlib-devel
+BuildRequires:	autoconf2.5
+BuildRequires:	transfig, tetex-latex
+BuildRequires:	ghostscript
+Source0:	http://www.torproject.org/dist/%{name}-%{version}.tar.gz
+Source1:	%{name}.logrotate
+Source3: 	%{name}.sysconfig
+Source4:	%{name}.service
+Source5:	%{name}-tmpfiles.conf
 
 %description
 Tor is a connection-based low-latency anonymous communication system.
@@ -41,8 +46,9 @@ bugs. The present network is very small -- this further reduces the
 strength of the anonymity provided. Tor is not presently suitable
 for high-stakes anonymity.
 
+
 %prep
-%setup -q 
+%setup -q
  
 %build
 %configure2_5x
@@ -53,10 +59,6 @@ for high-stakes anonymity.
 
 %define _logdir %{_var}/log
 
-mkdir -p %{buildroot}%{_initrddir}
-cat %{SOURCE2} > %{buildroot}%{_initrddir}/%{name}
-chmod 0755 %{buildroot}%{_initrddir}/%{name}
-
 install -p -m 644 %{buildroot}%{_sysconfdir}/%{name}/torrc.sample %{buildroot}%{_sysconfdir}/%{name}/torrc
 
 mkdir -p -m 755 %{buildroot}%{_sysconfdir}/logrotate.d
@@ -66,17 +68,22 @@ mkdir -p -m 755 %{buildroot}%{_sysconfdir}/sysconfig/
 cat %{SOURCE3} > %{buildroot}%{_sysconfdir}/sysconfig/%{name}
 
 mkdir -p -m 700 %{buildroot}%{_localstatedir}/lib/%{name}
-mkdir -p -m 755 %{buildroot}%{_var}/run/%{name}
+mkdir -p -m 755 %{buildroot}%{_var}/%{name}
 mkdir -p -m 755 %{buildroot}%{_logdir}/%{name}
 
 # Bash completion
 mkdir -p %{buildroot}%{_sysconfdir}/bash_completion.d
 echo 'complete -F _command $filenames torify' > %{buildroot}%{_sysconfdir}/bash_completion.d/%{name}
 
+# Systemd support
+install -D -p -m 0644 %SOURCE4 %{buildroot}%_unitdir/%name.service
+install -D -p -m 0644 %{SOURCE5} %{buildroot}%{_tmpfilesdir}/%{name}.conf
+
 %pre
 %_pre_useradd %{runuser} / /bin/false
 
 %post
+%tmpfiles_create %{name}
 %_post_service %{name}
 
 %preun
@@ -92,20 +99,20 @@ rm -f %{_localstatedir}/%{name}/fingerprint
 %_postun_groupdel %{runuser}
 
 %files
-%doc LICENSE README ChangeLog ReleaseNotes doc/HACKING doc/TODO 
+%doc ReleaseNotes INSTALL LICENSE README ChangeLog doc/HACKING doc/TODO
 %{_mandir}/man*/*
 %{_bindir}/tor
 %{_bindir}/torify
 %{_bindir}/tor-resolve
 %{_bindir}/tor-gencert
-%config(noreplace) %attr(0755,%{runuser},%{runuser}) %{_initrddir}/%{name}
+%_unitdir/%name.service
+%{_tmpfilesdir}/%{name}.conf
 %config(noreplace) %attr(0644,root,root) %{_sysconfdir}/logrotate.d/%{name}
 %dir %attr(0755,root,%{runuser}) %{_sysconfdir}/%{name}/
 %config(noreplace) %attr(0644,root,%{runuser}) %{_sysconfdir}/%{name}/*
 %config(noreplace) %{_sysconfdir}/sysconfig/%{name}
 %attr(0700,%{runuser},%{runuser}) %dir %{_localstatedir}/lib/%{name}
-%attr(0750,%{runuser},%{runuser}) %dir %{_var}/run/%{name}
+%attr(0750,%{runuser},%{runuser}) %dir %{_var}/%{name}
 %attr(0750,%{runuser},%{runuser}) %dir %{_logdir}/%{name}
 %{_sysconfdir}/bash_completion.d/%{name}
 %{_datadir}/%{name}
-

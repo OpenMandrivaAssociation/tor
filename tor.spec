@@ -1,15 +1,15 @@
 %define runuser toruser
 
 Name:		tor
-Version:	0.2.4.20
+Version:	0.2.4.21
 Release:	1
 Summary:	Anonymizing overlay network for TCP (The onion router)
 URL:		http://www.torproject.org/
 Group:		Networking/Other
 License:	BSD-like
-Requires(post):  systemd
-Requires(post):  rpm-helper
-Requires(preun): rpm-helper
+Requires(post):	systemd
+Requires(post):	rpm-helper
+Requires(preun):	rpm-helper
 Requires:	openssl >= 0.9.6
 Requires:	tsocks
 BuildRequires:	openssl-devel >= 0.9.6 

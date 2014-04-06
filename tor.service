@@ -1,0 +1,16 @@
+[Unit]
+Description=Anonymizing overlay network for TCP
+After=syslog.target network.target nss-lookup.target
+
+[Service]
+Type=simple
+User=toruser
+ExecStart=/usr/bin/tor -f /etc/tor/torrc Log "notice file /var/log/tor/tor.log" RunAsDaemon 0 DataDirectory /var/lib/tor
+ExecReload=/bin/kill -HUP $MAINPID
+ExecStop=/bin/kill -INT $MAINPID
+TimeoutSec=30
+Restart=on-failure
+LimitNOFILE=4096
+
+[Install]
+WantedBy=multi-user.target

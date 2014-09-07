@@ -2,7 +2,7 @@
 
 Name:		tor
 Version:	0.2.4.23
-Release:	1
+Release:	2
 Summary:	Anonymizing overlay network for TCP (The onion router)
 URL:		http://www.torproject.org/
 Group:		Networking/Other
@@ -11,7 +11,7 @@ Requires(post):	systemd
 Requires(post):	rpm-helper
 Requires(preun):	rpm-helper
 Requires:	openssl >= 0.9.6
-Requires:	tsocks
+Requires:	torsocks
 BuildRequires:	openssl-devel >= 0.9.6 
 BuildRequires:	pkgconfig(libevent)
 BuildRequires:	zlib-devel

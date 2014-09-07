@@ -1,6 +1,2 @@
-removed_sources:
-  tor-0.2.2.39.tar.gz: cc5021a7656c0cd22de42da9f0ce7335026852bf
-  tor-0.2.3.25.tar.gz: ef02e5b0eb44ab1a5d6108c39bd4e28918de79dc
-  tor-0.2.4.20.tar.gz: 09ba4eda9a73c46852a277b721ed74c8263e8dba
 sources:
-  tor-0.2.4.21.tar.gz: b93b66e4d5162cefc711cb44f9167ed4799ef990
+  tor-0.2.4.23.tar.gz: 877135dcae4bacd2ce1f2a7d25fe4f614fe2ed8f

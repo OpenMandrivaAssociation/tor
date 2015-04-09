@@ -1,8 +1,8 @@
 %define runuser toruser
 
 Name:		tor
-Version:	0.2.5.10
-Release:	2
+Version:	0.2.6.7
+Release:	1
 Summary:	Anonymizing overlay network for TCP (The onion router)
 URL:		http://www.torproject.org/
 Group:		Networking/Other
@@ -14,6 +14,7 @@ Requires:	openssl >= 0.9.6
 Requires:	torsocks
 BuildRequires:	openssl-devel >= 0.9.6 
 BuildRequires:	pkgconfig(libevent)
+BuildRequires:	pkgconfig(systemd)
 BuildRequires:	zlib-devel
 BuildRequires:	autoconf2.5
 #BuildRequires:	transfig, tetex-latex

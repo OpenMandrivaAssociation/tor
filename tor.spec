@@ -15,6 +15,7 @@ Requires:	torsocks
 BuildRequires:	openssl-devel >= 0.9.6 
 BuildRequires:	pkgconfig(libevent)
 BuildRequires:	pkgconfig(systemd)
+BuildRequires:	pkgconfig(libsystemd-daemon)
 BuildRequires:	zlib-devel
 BuildRequires:	autoconf2.5
 #BuildRequires:	transfig, tetex-latex

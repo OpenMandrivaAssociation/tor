@@ -1,2 +1,4 @@
-sources:
+removed_sources:
   tor-0.2.7.5.tar.gz: ff099ddea9b33788d6f6ad8ed7f38479be197086
+sources:
+  tor-0.2.7.6.tar.gz: 1fe65414312d9e1d973e5b2f425cf3a639025d41

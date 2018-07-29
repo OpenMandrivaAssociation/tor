@@ -1,7 +1,7 @@
 %define runuser toruser
 
 Name:		tor
-Version:	0.3.3.6
+Version:	0.3.3.9
 Release:	1
 Summary:	Anonymizing overlay network for TCP (The onion router)
 URL:		http://www.torproject.org/

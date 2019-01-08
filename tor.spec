@@ -1,7 +1,7 @@
 %define runuser toruser
 
 Name:		tor
-Version:	0.3.4.9
+Version:	0.3.5.7
 Release:	1
 Summary:	Anonymizing overlay network for TCP (The onion router)
 URL:		http://www.torproject.org/
@@ -105,6 +105,7 @@ rm -f %{_localstatedir}/%{name}/fingerprint
 %{_bindir}/torify
 %{_bindir}/tor-resolve
 %{_bindir}/tor-gencert
+%{_bindir}/tor-print-ed-signing-cert
 %_unitdir/%name.service
 %{_tmpfilesdir}/%{name}.conf
 %config(noreplace) %attr(0644,root,root) %{_sysconfdir}/logrotate.d/%{name}

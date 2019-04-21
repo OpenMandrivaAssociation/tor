@@ -2,12 +2,13 @@
 
 Name:		tor
 Version:	0.3.5.8
-Release:	2
+Release:	3
 Summary:	Anonymizing overlay network for TCP (The onion router)
 URL:		http://www.torproject.org/
 Group:		Networking/Other
 License:	BSD-like
 Requires(post):	systemd
+BuildRequires:	rpm-helper
 Requires(post):	rpm-helper
 Requires(preun): rpm-helper
 Requires:	openssl >= 0.9.6

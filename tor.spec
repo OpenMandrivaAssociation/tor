@@ -2,7 +2,7 @@
 
 Name:		tor
 Version:	0.3.5.8
-Release:	1
+Release:	2
 Summary:	Anonymizing overlay network for TCP (The onion router)
 URL:		http://www.torproject.org/
 Group:		Networking/Other
@@ -80,7 +80,7 @@ install -D -p -m 0644 %SOURCE4 %{buildroot}%_unitdir/%name.service
 install -D -p -m 0644 %{SOURCE5} %{buildroot}%{_tmpfilesdir}/%{name}.conf
 
 %pre
-%_pre_useradd %{runuser} / /bin/false
+%_pre_useradd %{runuser} %{_localstatedir}/lib/%{name} /bin/false
 
 %post
 %tmpfiles_create %{name}

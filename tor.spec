@@ -100,7 +100,7 @@ rm -f %{_localstatedir}/%{name}/fingerprint
 %_postun_groupdel %{runuser}
 
 %files
-%doc ReleaseNotes INSTALL LICENSE README ChangeLog doc/HACKING
+%doc ReleaseNotes INSTALL LICENSE README ChangeLog doc/HACKING doc/tor
 %{_mandir}/man*/*
 %{_bindir}/tor
 %{_bindir}/torify

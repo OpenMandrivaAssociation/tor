@@ -1,12 +1,18 @@
 %define runuser toruser
 
 Name:		tor
-Version:	0.4.5.8
+Version:	0.4.6.5
 Release:	1
 Summary:	Anonymizing overlay network for TCP (The onion router)
-URL:		http://www.torproject.org/
 Group:		Networking/Other
 License:	BSD-like
+URL:		http://www.torproject.org/
+Source0:	http://www.torproject.org/dist/%{name}-%{version}.tar.gz
+Source1:	%{name}.logrotate
+Source3: 	%{name}.sysconfig
+Source4:	%{name}.service
+Source5:	%{name}-tmpfiles.conf
+
 Requires(post):	systemd
 BuildRequires:	rpm-helper
 Requires(post):	rpm-helper
@@ -19,11 +25,6 @@ BuildRequires:	pkgconfig(systemd)
 BuildRequires:	zlib-devel
 BuildRequires:	autoconf2.5
 BuildRequires:	ghostscript
-Source0:	http://www.torproject.org/dist/%{name}-%{version}.tar.gz
-Source1:	%{name}.logrotate
-Source3: 	%{name}.sysconfig
-Source4:	%{name}.service
-Source5:	%{name}-tmpfiles.conf
 
 %description
 Tor is a connection-based low-latency anonymous communication system.

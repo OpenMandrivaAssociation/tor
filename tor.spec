@@ -54,10 +54,10 @@ for high-stakes anonymity.
 
 %build
 %configure
-%make
+%make_build
 
 %install
-%makeinstall
+%make_install
 
 %define _logdir %{_var}/log
 
@@ -101,7 +101,7 @@ rm -f %{_localstatedir}/%{name}/fingerprint
 %_postun_groupdel %{runuser}
 
 %files
-%doc ReleaseNotes INSTALL LICENSE README ChangeLog doc/HACKING
+%doc ReleaseNotes INSTALL LICENSE README* ChangeLog doc/HACKING
 %{_datadir}/doc/tor/*.html
 %{_mandir}/man*/*
 %{_bindir}/tor

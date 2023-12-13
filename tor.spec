@@ -1,13 +1,13 @@
 %define runuser toruser
 
 Name:		tor
-Version:	0.4.8.9
+Version:	0.4.8.10
 Release:	1
 Summary:	Anonymizing overlay network for TCP (The onion router)
 Group:		Networking/Other
 License:	BSD-like
-URL:		http://www.torproject.org/
-Source0:	http://www.torproject.org/dist/%{name}-%{version}.tar.gz
+URL:		https://www.torproject.org/
+Source0:	https://www.torproject.org/dist/%{name}-%{version}.tar.gz
 Source1:	%{name}.logrotate
 Source3: 	%{name}.sysconfig
 Source4:	%{name}.service

@@ -1,4 +1,4 @@
-%define runuser toruser
+%define runuser toranon
 
 Name:		tor
 Version:	0.4.8.13
@@ -15,16 +15,13 @@ Source5:	%{name}-tmpfiles.conf
 Source6:	%{name}.sysusers
 
 Requires(post):	systemd
-BuildRequires:	rpm-helper
-Requires(post):	rpm-helper
-Requires(preun): rpm-helper
 Requires:	openssl >= 0.9.6
 Requires:	torsocks
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(libevent)
 BuildRequires:	pkgconfig(systemd)
-BuildRequires:	zlib-devel
-BuildRequires:	autoconf2.5
+BuildRequires:	pkgconfig(zlib)
+BuildRequires:	autoconf
 BuildRequires:	ghostscript
 
 %description
@@ -86,24 +83,12 @@ install -D -p -m 0644 %{SOURCE5} %{buildroot}%{_tmpfilesdir}/%{name}.conf
 
 install -p -D -m 0644 %{SOURCE6} %{buildroot}%{_sysusersdir}/tor.conf
 
-%pre
-%_pre_useradd %{runuser} %{_localstatedir}/lib/%{name} /bin/false
-
-%post
-%tmpfiles_create %{name}
-%_post_service %{name}
-
 %preun
-%_preun_service %{name}
 rm -f %{_localstatedir}/%{name}/cached-directory
 rm -f %{_localstatedir}/%{name}/bw_accounting
 rm -f %{_localstatedir}/%{name}/control_auth_cookie
 rm -f %{_localstatedir}/%{name}/router.desc
 rm -f %{_localstatedir}/%{name}/fingerprint
-
-%postun
-%_postun_userdel %{runuser}
-%_postun_groupdel %{runuser}
 
 %files
 %doc ReleaseNotes INSTALL LICENSE README* ChangeLog doc/HACKING

@@ -12,6 +12,7 @@ Source1:	%{name}.logrotate
 Source3: 	%{name}.sysconfig
 Source4:	%{name}.service
 Source5:	%{name}-tmpfiles.conf
+Source6:	%{name}.sysusers
 
 Requires(post):	systemd
 BuildRequires:	rpm-helper
@@ -50,7 +51,7 @@ for high-stakes anonymity.
 
 
 %prep
-%setup -q
+%autosetup -p1
 
 %build
 %configure
@@ -80,6 +81,10 @@ echo 'complete -F _command $filenames torify' > %{buildroot}%{_sysconfdir}/bash_
 # Systemd support
 install -D -p -m 0644 %SOURCE4 %{buildroot}%_unitdir/%name.service
 install -D -p -m 0644 %{SOURCE5} %{buildroot}%{_tmpfilesdir}/%{name}.conf
+
+# Add Tor User
+
+install -p -D -m 0644 %{SOURCE6} %{buildroot}%{_sysusersdir}/tor.conf
 
 %pre
 %_pre_useradd %{runuser} %{_localstatedir}/lib/%{name} /bin/false
@@ -119,4 +124,5 @@ rm -f %{_localstatedir}/%{name}/fingerprint
 %attr(0750,%{runuser},%{runuser}) %dir %{_var}/%{name}
 %attr(0750,%{runuser},%{runuser}) %dir %{_logdir}/%{name}
 %{_sysconfdir}/bash_completion.d/%{name}
+%{_sysusersdir}/tor.conf
 %{_datadir}/%{name}

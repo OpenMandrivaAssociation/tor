@@ -1,8 +1,10 @@
-%define runuser toranon
+%global runuser toranon
+
+%global _logdir %{_var}/log
 
 Name:		tor
 Version:	0.4.8.13
-Release:	2
+Release:	3
 Summary:	Anonymizing overlay network for TCP (The onion router)
 Group:		Networking/Other
 License:	BSD-like
@@ -57,31 +59,29 @@ for high-stakes anonymity.
 %install
 %make_install
 
-%define _logdir %{_var}/log
+install -pm 644 %{buildroot}%{_sysconfdir}/%{name}/torrc.sample %{buildroot}%{_sysconfdir}/%{name}/torrc
 
-install -p -m 644 %{buildroot}%{_sysconfdir}/%{name}/torrc.sample %{buildroot}%{_sysconfdir}/%{name}/torrc
-
-mkdir -p -m 755 %{buildroot}%{_sysconfdir}/logrotate.d
+mkdir -pm 755 %{buildroot}%{_sysconfdir}/logrotate.d
 cat %{SOURCE1} > %{buildroot}%{_sysconfdir}/logrotate.d/%{name}
 
-mkdir -p -m 755 %{buildroot}%{_sysconfdir}/sysconfig/
+mkdir -pm 755 %{buildroot}%{_sysconfdir}/sysconfig/
 cat %{SOURCE3} > %{buildroot}%{_sysconfdir}/sysconfig/%{name}
 
-mkdir -p -m 700 %{buildroot}%{_localstatedir}/lib/%{name}
-mkdir -p -m 755 %{buildroot}%{_var}/%{name}
-mkdir -p -m 755 %{buildroot}%{_logdir}/%{name}
+mkdir -pm 700 %{buildroot}%{_localstatedir}/lib/%{name}
+mkdir -pm 755 %{buildroot}%{_localstatedir}/%{name}
+mkdir -pm 755 %{buildroot}%{_logdir}/%{name}
 
 # Bash completion
 mkdir -p %{buildroot}%{_sysconfdir}/bash_completion.d
 echo 'complete -F _command $filenames torify' > %{buildroot}%{_sysconfdir}/bash_completion.d/%{name}
 
 # Systemd support
-install -D -p -m 0644 %SOURCE4 %{buildroot}%_unitdir/%name.service
-install -D -p -m 0644 %{SOURCE5} %{buildroot}%{_tmpfilesdir}/%{name}.conf
+install -D -pm 0644 %{SOURCE4} %{buildroot}%_unitdir/%name.service
+install -D -pm 0644 %{SOURCE5} %{buildroot}%{_tmpfilesdir}/%{name}.conf
 
 # Add Tor User
 
-install -p -D -m 0644 %{SOURCE6} %{buildroot}%{_sysusersdir}/tor.conf
+install -D -pm 0644 %{SOURCE6} %{buildroot}%{_sysusersdir}/tor.conf
 
 %preun
 rm -f %{_localstatedir}/%{name}/cached-directory

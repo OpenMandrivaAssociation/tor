@@ -3,8 +3,8 @@
 %global _logdir %{_var}/log
 
 Name:		tor
-Version:	0.4.8.13
-Release:	3
+Version:	0.4.8.14
+Release:	1
 Summary:	Anonymizing overlay network for TCP (The onion router)
 Group:		Networking/Other
 License:	BSD-like

@@ -19,6 +19,10 @@ Source6:	%{name}.sysusers
 Requires(post):	systemd
 Requires:	openssl >= 0.9.6
 Requires:	torsocks
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(libevent)
 BuildRequires:	pkgconfig(systemd)

@@ -3,7 +3,7 @@
 %global _logdir %{_var}/log
 
 Name:		tor
-Version:	0.4.9.11
+Version:	0.4.9.12
 Release:	1
 Summary:	Anonymizing overlay network for TCP (The onion router)
 Group:		Networking/Other
@@ -20,7 +20,6 @@ Requires(post):	systemd
 Requires:	openssl >= 0.9.6
 Requires:	torsocks
 BuildRequires:	automake
-BuildRequires:	libtool-base
 BuildRequires:	slibtool
 BuildRequires:	make
 BuildRequires:	pkgconfig(openssl)
@@ -59,6 +58,48 @@ for high-stakes anonymity.
 %build
 %configure
 %make_build
+
+# Circuit crypto, consensus/microdesc parse and config validation are
+# branchy; the unit tests plus a local verify-config / hash-password
+# cover those without needing the network.
+%pgo
+tor=
+test=
+gencert=
+resolve=
+for d in src/app src/app/.libs . src/or src/or/.libs; do
+	[ -x "$d/tor" ] && tor="$d/tor"
+done
+for d in src/test src/test/.libs; do
+	[ -x "$d/test" ] && test="$d/test"
+done
+for d in src/tools src/tools/.libs; do
+	[ -x "$d/tor-gencert" ] && gencert="$d/tor-gencert"
+	[ -x "$d/tor-resolve" ] && resolve="$d/tor-resolve"
+done
+if [ -z "$tor" ]; then
+	echo "PGO: instrumented tor missing" >&2
+	find . -name tor -type f | head
+	exit 1
+fi
+train=$(mktemp -d)
+trap 'rm -rf "$train"' EXIT
+cat > "$train/torrc" <<'EOF'
+SocksPort 0
+ORPort 0
+ControlPort 0
+DataDirectory .
+Log notice file /dev/null
+AvoidDiskWrites 1
+EOF
+"$tor" --help >/dev/null 2>&1 || true
+"$tor" --hash-password pgo-train-password >/dev/null
+"$tor" --verify-config -f "$train/torrc"
+[ -n "$resolve" ] && "$resolve" --help >/dev/null 2>&1 || true
+[ -n "$gencert" ] && "$gencert" --help >/dev/null 2>&1 || true
+if [ -n "$test" ]; then
+	"$test" --quiet || true
+fi
 
 %install
 %make_install
